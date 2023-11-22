@@ -1,8 +1,13 @@
+import { NextUIProvider } from '@nextui-org/react';
+import { RouterProvider } from 'react-router-dom';
+
+import { router } from './router/router.tsx';
+
 function App() {
   return (
-    <>
-      <p className="m-3 w-auto p-5 text-center">Hello world</p>
-    </>
+    <NextUIProvider>
+      <RouterProvider router={router} />
+    </NextUIProvider>
   );
 }
 
