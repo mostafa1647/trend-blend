@@ -9,11 +9,11 @@ import {
   NavbarMenu,
   NavbarMenuItem,
   Avatar,
-  Button,
 } from '@nextui-org/react';
 import { NavLink } from 'react-router-dom';
 
 import { paths } from '../../router/paths.ts';
+import { newsapiHttpClient } from '../../utils/http-clients';
 
 import { appbarData } from './appbar-data.ts';
 
@@ -21,6 +21,25 @@ const activeMenuClasses = 'font-medium text-primary';
 
 export const Appbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
+
+  const avatarClickHandler = async () => {
+    // TODO: This is for easy testing api function, change it to it's own functionality
+    try {
+      const { data, status } = await newsapiHttpClient.get(
+        '/v2/top-headlines',
+        {
+          params: {
+            country: 'us',
+            category: 'business',
+          },
+        },
+      );
+
+      console.log({ data, status });
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
   return (
     <Navbar
@@ -60,9 +79,7 @@ export const Appbar = () => {
           color="primary"
           size="sm"
           src="https://i.pravatar.cc/50"
-          onClick={() => {
-            console.log('clicked on avatar');
-          }}
+          onClick={avatarClickHandler}
         />
       </NavbarContent>
 

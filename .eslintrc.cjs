@@ -11,6 +11,7 @@ module.exports = {
     'plugin:import/typescript',
     'plugin:react/recommended',
     'plugin:react/jsx-runtime',
+    'plugin:@tanstack/eslint-plugin-query/recommended',
   ],
   ignorePatterns: ['dist', '.eslintrc.cjs'],
   parser: '@typescript-eslint/parser',
@@ -125,5 +126,8 @@ module.exports = {
     'no-multi-spaces': ['error'],
     // we want to avoid trailing spaces
     'no-trailing-spaces': ['error'],
+    '@tanstack/query/exhaustive-deps': 'error',
+    '@tanstack/query/no-rest-destructuring': 'warn',
+    '@tanstack/query/stable-query-client': 'error',
   },
 };
