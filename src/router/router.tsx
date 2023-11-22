@@ -2,19 +2,21 @@ import { createBrowserRouter } from 'react-router-dom';
 
 import { RootLayout } from '../layouts';
 import { Explore } from '../pages/explore';
-import { Home } from '../pages/home';
+import { Feed } from '../pages/feed';
+
+import { paths } from './paths.ts';
 
 export const router = createBrowserRouter([
   {
-    path: '/',
+    path: paths.home.href,
     element: <RootLayout />,
     children: [
       {
         index: true,
-        element: <Home />,
+        element: <Feed />,
       },
       {
-        path: '/explore',
+        path: paths.explore.href,
         element: <Explore />,
       },
     ],
