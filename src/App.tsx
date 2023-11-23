@@ -5,7 +5,14 @@ import { RouterProvider } from 'react-router-dom';
 
 import { router } from './router/router.tsx';
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+      refetchOnReconnect: true,
+    },
+  },
+});
 
 function App() {
   return (

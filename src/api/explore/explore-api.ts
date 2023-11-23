@@ -25,6 +25,8 @@ export const exploreApi = {
         {
           params: {
             q: 'programming',
+            pageSize: 10,
+            page: 1,
           },
         },
       );
@@ -54,17 +56,23 @@ export const exploreApi = {
         exploreApi.getExploreFromGuardian(),
       ]);
 
+    const newsApiMappedArticles: Article[] = newsapiMappers.articleMapper(
+      newsapiResponse.data.articles,
+      NewsapiCategory.BUSINESS,
+    );
+
+    const nytimesMappedArticles: Article[] = nytimesMappers.articleMapper(
+      nytimesResponse.data.response.docs,
+    );
+
+    const guardiansMappedArticled: Article[] = guardiansMappers.articleMapper(
+      guardiansResponse.data.response.results,
+    );
+
     return aggregators.articleAggregator({
-      newsapiArticles: newsapiMappers.articleMapper(
-        newsapiResponse.data.articles,
-        NewsapiCategory.BUSINESS,
-      ),
-      nytimesArticles: nytimesMappers.articleMapper(
-        nytimesResponse.data.response.docs,
-      ),
-      guardianArticles: guardiansMappers.articleMapper(
-        guardiansResponse.data.response.results,
-      ),
+      newsapiArticles: newsApiMappedArticles,
+      nytimesArticles: nytimesMappedArticles,
+      guardianArticles: guardiansMappedArticled,
     });
   },
 };

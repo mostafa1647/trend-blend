@@ -12,3 +12,7 @@ export type GetExploreFromGuardiansSuccessResponse = GuardiansResponse;
 export type GetExploreSuccessResponse = Article[];
 
 export type GetExploreResponse = GetExploreSuccessResponse | Error;
+
+export interface GetExploreRequest {
+  searchValue?: string;
+}

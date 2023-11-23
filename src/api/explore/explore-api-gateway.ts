@@ -1,19 +1,18 @@
-import { useQuery } from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
 
 import {
-  GetExploreResponse,
+  GetExploreRequest,
   GetExploreSuccessResponse,
 } from './explore-api-types.ts';
 import { exploreApi } from './explore-api.ts';
 
 export const exploreApiGateway = {
   useGetExplore: () =>
-    useQuery<
-      GetExploreResponse,
+    useMutation<
+      GetExploreSuccessResponse,
       Error, // todo: check error
-      GetExploreSuccessResponse
+      GetExploreRequest
     >({
-      queryFn: exploreApi.getExplore,
-      queryKey: ['explore', 'useGetExplore'],
+      mutationFn: exploreApi.getExplore,
     }),
 };
