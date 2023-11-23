@@ -37,12 +37,17 @@ export const ArticleListItem = ({ article }: ArticleListItemProps) => {
               {article.author}
             </Chip>
           ) : null}
+          {article.category ? (
+            <Chip className="me-2" color="primary" size="sm">
+              {article.category}
+            </Chip>
+          ) : null}
         </div>
       </CardHeader>
       <Divider />
       {article.description ? <CardBody>{article.description}</CardBody> : null}
       <CardFooter className="flex flex-row flex-wrap items-center justify-between">
-        <p>{article.publishedAt}</p>
+        <p>{new Date(article.publishedAt).toLocaleString()}</p>
         <Link
           href={article.url}
           target="_blank"

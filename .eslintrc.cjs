@@ -31,7 +31,7 @@ module.exports = {
       },
     ],
     'react/jsx-curly-brace-presence': ['error', 'never'],
-    'import/named': 2,
+    'import/named': 0,
     'import/namespace': 2,
     'import/default': 2,
     'import/export': 2,

@@ -1,3 +1,5 @@
+import { AxiosResponse } from 'axios';
+
 export interface Article {
   title: string;
   description?: string;
@@ -8,3 +10,5 @@ export interface Article {
   publishedAt: string;
   category?: string;
 }
+
+export type ApiResponse<T> = Promise<AxiosResponse<T>>;
