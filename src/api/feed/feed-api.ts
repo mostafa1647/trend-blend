@@ -1,6 +1,6 @@
 import { ApiResponse, Article } from '../../types/article-types.ts';
 import { NewsapiCategory } from '../../types/newsapi-types.ts';
-import { feedAggregators } from '../../utils/aggregators/feed-aggregators.ts';
+import { aggregators } from '../../utils/aggregators.ts';
 import {
   guardianHttpClient,
   newsapiHttpClient,
@@ -52,15 +52,15 @@ export const feedApi = {
         feedApi.getFeedFromGuardian(),
       ]);
 
-    return feedAggregators.getFeedAggregator({
-      newsapiArticles: newsapiMappers.mapGetFeed(
+    return aggregators.articleAggregator({
+      newsapiArticles: newsapiMappers.articleMapper(
         newsapiResponse.data.articles,
         NewsapiCategory.BUSINESS,
       ),
-      nytimesArticles: nytimesMappers.mapGetFeed(
+      nytimesArticles: nytimesMappers.articleMapper(
         nytimesResponse.data.response.docs,
       ),
-      guardianArticles: guardiansMappers.mapGetFeed(
+      guardianArticles: guardiansMappers.articleMapper(
         guardiansResponse.data.response.results,
       ),
     });

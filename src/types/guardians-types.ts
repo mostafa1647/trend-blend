@@ -1,4 +1,4 @@
-export interface GuardiansResponse {
+export interface GuardiansResponseType {
   status: string;
   userTier: string;
   total: number;
@@ -22,4 +22,8 @@ export interface GuardianArticle {
   isHosted: boolean;
   pillarId: string;
   pillarName: string;
+}
+
+export interface GuardiansResponse {
+  response: GuardiansResponseType;
 }

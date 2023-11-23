@@ -2,7 +2,7 @@ import { Article } from '../../types/article-types.ts';
 import { NytimesDocument } from '../../types/nytimes-types.ts';
 
 export const nytimesMappers = {
-  mapGetFeed: (articles: NytimesDocument[]): Article[] => {
+  articleMapper: (articles: NytimesDocument[]): Article[] => {
     if (!articles || !articles.length) return [];
 
     return articles.map((article) => ({

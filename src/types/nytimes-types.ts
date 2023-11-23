@@ -86,3 +86,12 @@ export interface NytimesMeta {
   offset: number;
   time: number;
 }
+
+export interface NytimesResponse {
+  status: string;
+  copyright: string;
+  response: {
+    docs: NytimesDocument[];
+    meta: NytimesMeta;
+  };
+}

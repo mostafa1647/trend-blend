@@ -1,4 +1,4 @@
-import { Article } from '../../types/article-types.ts';
+import { Article } from '../types/article-types.ts';
 
 interface GetFeedAggregatorArgs {
   newsapiArticles: Article[];
@@ -6,8 +6,8 @@ interface GetFeedAggregatorArgs {
   guardianArticles: Article[];
 }
 
-export const feedAggregators = {
-  getFeedAggregator: ({
+export const aggregators = {
+  articleAggregator: ({
     newsapiArticles,
     nytimesArticles,
     guardianArticles,

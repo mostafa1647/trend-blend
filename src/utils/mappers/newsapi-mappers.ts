@@ -2,7 +2,7 @@ import { Article } from '../../types/article-types.ts';
 import { NewsapiArticle, NewsapiCategory } from '../../types/newsapi-types.ts';
 
 export const newsapiMappers = {
-  mapGetFeed: (
+  articleMapper: (
     articles: NewsapiArticle[],
     category: NewsapiCategory,
   ): Article[] => {

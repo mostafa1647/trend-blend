@@ -24,3 +24,9 @@ export const enum NewsapiCategory {
   SPORTS = 'sports',
   TECHNOLOGY = 'technology',
 }
+
+export interface NewsapiResponse {
+  status: string;
+  totalResults: number;
+  articles: NewsapiArticle[];
+}
