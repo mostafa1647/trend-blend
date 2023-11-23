@@ -1,5 +1,7 @@
 import { ApiResponse, Article } from '../../types/article-types.ts';
-import { NewsapiCategory } from '../../types/newsapi-types.ts';
+import { GuardiansRequest } from '../../types/guardians-types.ts';
+import { NewsapiCategory, NewsapiRequest } from '../../types/newsapi-types.ts';
+import { NytimesRequest } from '../../types/nytimes-types.ts';
 import { aggregators } from '../../utils/aggregators.ts';
 import {
   guardianHttpClient,
@@ -14,42 +16,60 @@ import {
   GetFeedFromGuardiansSuccessResponse,
   GetFeedFromNewsapiSuccessResponse,
   GetFeedFromNytimesSuccessResponse,
+  GetFeedRequest,
 } from './feed-api-types.ts';
 
 export const feedApi = {
-  getFeedFromNewsapi: (): ApiResponse<GetFeedFromNewsapiSuccessResponse> => {
+  getFeedFromNewsapi: ({
+    page,
+  }: NewsapiRequest): ApiResponse<GetFeedFromNewsapiSuccessResponse> => {
     // TODO: add parameters
     return newsapiHttpClient.get<GetFeedFromNewsapiSuccessResponse>(
       '/v2/top-headlines',
       {
         params: {
-          country: 'us',
+          country: import.meta.env.VITE_NEWSAPI_COUNTRY,
           category: 'business',
+          page: page || 1,
         },
       },
     );
   },
 
-  getFeedFromNytimes: (): ApiResponse<GetFeedFromNytimesSuccessResponse> => {
+  getFeedFromNytimes: ({
+    page,
+  }: NytimesRequest): ApiResponse<GetFeedFromNytimesSuccessResponse> => {
     // TODO: add parameters
     return nytimesHttpClient.get<GetFeedFromNytimesSuccessResponse>(
       '/svc/search/v2/articlesearch.json',
+      {
+        params: {
+          page: page - 1 || 0,
+        },
+      },
     );
   },
 
-  getFeedFromGuardian: (): ApiResponse<GetFeedFromGuardiansSuccessResponse> => {
+  getFeedFromGuardian: ({
+    page,
+  }: GuardiansRequest): ApiResponse<GetFeedFromGuardiansSuccessResponse> => {
     // TODO: add parameters
     return guardianHttpClient.get<GetFeedFromGuardiansSuccessResponse>(
       '/search',
+      {
+        params: {
+          page: page || 1,
+        },
+      },
     );
   },
 
-  getFeed: async (): Promise<Article[]> => {
+  getFeed: async ({ page }: GetFeedRequest): Promise<Article[]> => {
     const [newsapiResponse, nytimesResponse, guardiansResponse] =
       await Promise.all([
-        feedApi.getFeedFromNewsapi(),
-        feedApi.getFeedFromNytimes(),
-        feedApi.getFeedFromGuardian(),
+        feedApi.getFeedFromNewsapi({ page }),
+        feedApi.getFeedFromNytimes({ page }),
+        feedApi.getFeedFromGuardian({ page }),
       ]);
 
     const newsApiMappedArticles: Article[] = newsapiMappers.articleMapper(

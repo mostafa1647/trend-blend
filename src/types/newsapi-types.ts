@@ -1,3 +1,5 @@
+import { Pagination } from './general-types.ts';
+
 export interface NewsapiSource {
   id?: string;
   name: string;
@@ -30,3 +32,5 @@ export interface NewsapiResponse {
   totalResults: number;
   articles: NewsapiArticle[];
 }
+
+export interface NewsapiRequest extends Pagination {}

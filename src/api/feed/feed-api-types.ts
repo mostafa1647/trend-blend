@@ -12,3 +12,7 @@ export type GetFeedFromGuardiansSuccessResponse = GuardiansResponse;
 export type GetFeedSuccessResponse = Article[];
 
 export type GetFeedResponse = GetFeedSuccessResponse | Error;
+
+export interface GetFeedRequest {
+  page: number;
+}

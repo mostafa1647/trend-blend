@@ -1,16 +1,20 @@
 import { useQuery } from '@tanstack/react-query';
 
-import { GetFeedResponse, GetFeedSuccessResponse } from './feed-api-types.ts';
+import {
+  GetFeedRequest,
+  GetFeedResponse,
+  GetFeedSuccessResponse,
+} from './feed-api-types.ts';
 import { feedApi } from './feed-api.ts';
 
 export const feedApiGateway = {
-  useGetFeed: () =>
+  useGetFeed: (params: GetFeedRequest) =>
     useQuery<
       GetFeedResponse,
       Error, // todo: check error
       GetFeedSuccessResponse
     >({
-      queryFn: feedApi.getFeed,
-      queryKey: ['feed', 'useGetFeed'],
+      queryFn: () => feedApi.getFeed(params),
+      queryKey: ['feed', 'useGetFeed', params],
     }),
 };
