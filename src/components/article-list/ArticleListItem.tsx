@@ -17,7 +17,7 @@ interface ArticleListItemProps {
 export const ArticleListItem = ({ article }: ArticleListItemProps) => {
   return (
     <Card className="mb-3">
-      <CardHeader className="flex flex-col items-start justify-start">
+      <CardHeader className="z-0 flex flex-col items-start justify-start">
         <Link
           href={article.url}
           color="foreground"

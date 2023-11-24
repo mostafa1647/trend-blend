@@ -1,7 +1,5 @@
 import { ApiResponse, Article } from '../../types/article-types.ts';
-import { GuardiansRequest } from '../../types/guardians-types.ts';
-import { NewsapiCategory, NewsapiRequest } from '../../types/newsapi-types.ts';
-import { NytimesRequest } from '../../types/nytimes-types.ts';
+import { NewsapiCategory } from '../../types/newsapi-types.ts';
 import { aggregators } from '../../utils/aggregators.ts';
 import {
   guardianHttpClient,
@@ -25,7 +23,7 @@ export const feedApi = {
     sources,
     categories,
     authors,
-  }: NewsapiRequest): ApiResponse<GetFeedFromNewsapiSuccessResponse> => {
+  }: GetFeedRequest): ApiResponse<GetFeedFromNewsapiSuccessResponse> => {
     return newsapiHttpClient.get<GetFeedFromNewsapiSuccessResponse>(
       '/v2/top-headlines',
       {
@@ -50,7 +48,7 @@ export const feedApi = {
     sources,
     categories,
     authors,
-  }: NytimesRequest): ApiResponse<GetFeedFromNytimesSuccessResponse> => {
+  }: GetFeedRequest): ApiResponse<GetFeedFromNytimesSuccessResponse> => {
     return nytimesHttpClient.get<GetFeedFromNytimesSuccessResponse>(
       '/svc/search/v2/articlesearch.json',
       {
@@ -70,7 +68,7 @@ export const feedApi = {
     sources,
     categories,
     authors,
-  }: GuardiansRequest): ApiResponse<GetFeedFromGuardiansSuccessResponse> => {
+  }: GetFeedRequest): ApiResponse<GetFeedFromGuardiansSuccessResponse> => {
     return guardianHttpClient.get<GetFeedFromGuardiansSuccessResponse>(
       '/search',
       {

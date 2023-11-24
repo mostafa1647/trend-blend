@@ -118,7 +118,7 @@ export const PersonalizationModal = () => {
   const {
     data: sourcesData,
     isError: sourcesIsError,
-    isLoadingError: sourcesIsLoading,
+    isLoading: sourcesIsLoading,
   } = sourcesApiGateway.useGetSources();
 
   return (

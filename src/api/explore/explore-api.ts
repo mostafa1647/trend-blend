@@ -14,46 +14,104 @@ import {
   GetExploreFromGuardiansSuccessResponse,
   GetExploreFromNewsapiSuccessResponse,
   GetExploreFromNytimesSuccessResponse,
+  GetExploreRequest,
 } from './explore-api-types.ts';
 
 export const exploreApi = {
-  getExploreFromNewsapi:
-    (): ApiResponse<GetExploreFromNewsapiSuccessResponse> => {
-      // TODO: add parameters
-      return newsapiHttpClient.get<GetExploreFromNewsapiSuccessResponse>(
-        '/v2/everything',
-        {
-          params: {
-            q: 'programming',
-            pageSize: 10,
-            page: 1,
-          },
+  getExploreFromNewsapi: ({
+    searchValue,
+    category,
+    source,
+    date,
+  }: GetExploreRequest): ApiResponse<GetExploreFromNewsapiSuccessResponse> => {
+    const q = [searchValue || '', category || ''].filter(Boolean).join(' AND ');
+
+    return newsapiHttpClient.get<GetExploreFromNewsapiSuccessResponse>(
+      '/v2/everything',
+      {
+        params: {
+          ...(q && { q }),
+          ...(source && { sources: source }),
+          ...(date && { from: date, to: date }),
+          pageSize: 10,
+          page: 1,
         },
-      );
-    },
+      },
+    );
+  },
 
-  getExploreFromNytimes:
-    (): ApiResponse<GetExploreFromNytimesSuccessResponse> => {
-      // TODO: add parameters
-      return nytimesHttpClient.get<GetExploreFromNytimesSuccessResponse>(
-        '/svc/search/v2/articlesearch.json',
-      );
-    },
+  getExploreFromNytimes: ({
+    searchValue,
+    category,
+    source,
+    date,
+  }: GetExploreRequest): ApiResponse<GetExploreFromNytimesSuccessResponse> => {
+    const q = [searchValue || '', category || ''].filter(Boolean).join(' AND ');
+    const fq = [
+      date ? `pub_date:${date}` : '',
+      source ? `source:${source}` : '',
+    ]
+      .filter(Boolean)
+      .join(' AND ');
 
-  getExploreFromGuardian:
-    (): ApiResponse<GetExploreFromGuardiansSuccessResponse> => {
-      // TODO: add parameters
-      return guardianHttpClient.get<GetExploreFromGuardiansSuccessResponse>(
-        '/search',
-      );
-    },
+    return nytimesHttpClient.get<GetExploreFromNytimesSuccessResponse>(
+      '/svc/search/v2/articlesearch.json',
+      {
+        params: {
+          ...(q && { q }),
+          ...(fq && { fq }),
+        },
+      },
+    );
+  },
 
-  getExplore: async (): Promise<Article[]> => {
+  getExploreFromGuardian: ({
+    searchValue,
+    category,
+    source,
+    date,
+  }: GetExploreRequest): ApiResponse<GetExploreFromGuardiansSuccessResponse> => {
+    const q = [searchValue || '', source || '', category || '']
+      .filter(Boolean)
+      .join(' AND ');
+
+    return guardianHttpClient.get<GetExploreFromGuardiansSuccessResponse>(
+      '/search',
+      {
+        params: {
+          ...(q && { q }),
+          ...(date && { 'from-date': date }),
+        },
+      },
+    );
+  },
+
+  getExplore: async ({
+    searchValue,
+    category,
+    source,
+    date,
+  }: GetExploreRequest): Promise<Article[]> => {
     const [newsapiResponse, nytimesResponse, guardiansResponse] =
       await Promise.all([
-        exploreApi.getExploreFromNewsapi(),
-        exploreApi.getExploreFromNytimes(),
-        exploreApi.getExploreFromGuardian(),
+        exploreApi.getExploreFromNewsapi({
+          searchValue,
+          category,
+          source,
+          date,
+        }),
+        exploreApi.getExploreFromNytimes({
+          searchValue,
+          category,
+          source,
+          date,
+        }),
+        exploreApi.getExploreFromGuardian({
+          searchValue,
+          category,
+          source,
+          date,
+        }),
       ]);
 
     const newsApiMappedArticles: Article[] = newsapiMappers.articleMapper(

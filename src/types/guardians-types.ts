@@ -1,5 +1,3 @@
-import { GetFeedRequest } from '../api/feed/feed-api-types.ts';
-
 export interface GuardiansResponseType {
   status: string;
   userTier: string;
@@ -29,5 +27,3 @@ export interface GuardianArticle {
 export interface GuardiansResponse {
   response: GuardiansResponseType;
 }
-
-export interface GuardiansRequest extends GetFeedRequest {}

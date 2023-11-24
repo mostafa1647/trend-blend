@@ -1,5 +1,3 @@
-import { GetFeedRequest } from '../api/feed/feed-api-types.ts';
-
 export interface NytimesDocument {
   abstract: string;
   web_url: string;
@@ -97,5 +95,3 @@ export interface NytimesResponse {
     meta: NytimesMeta;
   };
 }
-
-export interface NytimesRequest extends GetFeedRequest {}

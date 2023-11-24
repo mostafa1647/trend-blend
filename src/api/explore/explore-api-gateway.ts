@@ -8,11 +8,7 @@ import { exploreApi } from './explore-api.ts';
 
 export const exploreApiGateway = {
   useGetExplore: () =>
-    useMutation<
-      GetExploreSuccessResponse,
-      Error, // todo: check error
-      GetExploreRequest
-    >({
+    useMutation<GetExploreSuccessResponse, Error, GetExploreRequest>({
       mutationFn: exploreApi.getExplore,
     }),
 };

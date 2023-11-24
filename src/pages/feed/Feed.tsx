@@ -36,21 +36,19 @@ export const Feed = () => {
       {isLoading ? (
         <ArticlePagesLoading />
       ) : data ? (
-        <>
-          <ArticleList articles={data!} />
-          <div className="flex items-center justify-center">
-            <Pagination
-              showControls
-              // We cannot go more than 10 pages because newsapi free account doesn't provide more than 100 hits
-              // Guardians is returning more than 10 pages, no matter what is the filtering options, so it's fine to set the total to 10
-              total={10}
-              page={page}
-              variant="light"
-              onChange={setPage}
-            />
-          </div>
-        </>
+        <ArticleList articles={data!} />
       ) : null}
+      <div className="flex items-center justify-center">
+        <Pagination
+          showControls
+          // We cannot go more than 10 pages because newsapi free account doesn't provide more than 100 hits
+          // Guardians is returning more than 10 pages, no matter what is the filtering options, so it's fine to set the total to 10
+          total={10}
+          page={page}
+          variant="light"
+          onChange={setPage}
+        />
+      </div>
     </>
   );
 };
