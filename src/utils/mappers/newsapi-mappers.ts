@@ -1,10 +1,13 @@
 import { Article } from '../../types/article-types.ts';
-import { NewsapiArticle, NewsapiCategory } from '../../types/newsapi-types.ts';
+import {
+  NewsapiArticle,
+  NewsapiCategoryType,
+} from '../../types/newsapi-types.ts';
 
 export const newsapiMappers = {
   articleMapper: (
     articles: NewsapiArticle[],
-    category: NewsapiCategory,
+    category: NewsapiCategoryType,
   ): Article[] => {
     if (!articles || !articles.length) return [];
 

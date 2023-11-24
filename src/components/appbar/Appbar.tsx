@@ -8,20 +8,18 @@ import {
   NavbarMenuToggle,
   NavbarMenu,
   NavbarMenuItem,
-  Avatar,
 } from '@nextui-org/react';
 import { NavLink } from 'react-router-dom';
 
 import { paths } from '../../router/paths.ts';
 
 import { appbarData } from './appbar-data.ts';
+import { PersonalizationModal } from './PersonalizationModal.tsx';
 
 const activeMenuClasses = 'font-medium text-primary';
 
 export const Appbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
-
-  const avatarClickHandler = async () => {};
 
   return (
     <Navbar
@@ -55,14 +53,7 @@ export const Appbar = () => {
       </NavbarContent>
 
       <NavbarContent justify="end">
-        <Avatar
-          isBordered={true}
-          as="button"
-          color="primary"
-          size="sm"
-          src="https://i.pravatar.cc/50"
-          onClick={avatarClickHandler}
-        />
+        <PersonalizationModal />
       </NavbarContent>
 
       <NavbarMenu>

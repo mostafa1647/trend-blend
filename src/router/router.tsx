@@ -1,5 +1,6 @@
 import { createBrowserRouter } from 'react-router-dom';
 
+import { PageError } from '../components/error';
 import { RootLayout } from '../layouts';
 import { Explore } from '../pages/explore';
 import { Feed } from '../pages/feed';
@@ -24,6 +25,6 @@ export const router = createBrowserRouter([
   {
     // TODO: complete 404 page
     path: '*',
-    element: <div>Not Found</div>,
+    element: <PageError />,
   },
 ]);

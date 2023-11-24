@@ -1,4 +1,4 @@
-import { Pagination } from './general-types.ts';
+import { GetFeedRequest } from '../api/feed/feed-api-types.ts';
 
 export interface NytimesDocument {
   abstract: string;
@@ -98,4 +98,4 @@ export interface NytimesResponse {
   };
 }
 
-export interface NytimesRequest extends Pagination {}
+export interface NytimesRequest extends GetFeedRequest {}

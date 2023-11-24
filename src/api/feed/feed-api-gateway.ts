@@ -9,11 +9,7 @@ import { feedApi } from './feed-api.ts';
 
 export const feedApiGateway = {
   useGetFeed: (params: GetFeedRequest) =>
-    useQuery<
-      GetFeedResponse,
-      Error, // todo: check error
-      GetFeedSuccessResponse
-    >({
+    useQuery<GetFeedResponse, Error, GetFeedSuccessResponse>({
       queryFn: () => feedApi.getFeed(params),
       queryKey: ['feed', 'useGetFeed', params],
     }),

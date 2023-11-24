@@ -1,5 +1,8 @@
 import axios from 'axios';
 
+/**
+ * @Documentation https://open-platform.theguardian.com/documentation/
+ */
 export const guardianHttpClient = axios.create({
   baseURL: import.meta.env.VITE_GUARDIAN_API_BASE_URL,
   params: {

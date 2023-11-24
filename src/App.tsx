@@ -8,6 +8,8 @@ import { router } from './router/router.tsx';
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
+      staleTime: +import.meta.env.VITE_REACT_QUERY_STALE_TIME,
+      retry: 2,
       refetchOnWindowFocus: false,
       refetchOnReconnect: true,
     },

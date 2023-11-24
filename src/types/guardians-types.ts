@@ -1,4 +1,4 @@
-import { Pagination } from './general-types.ts';
+import { GetFeedRequest } from '../api/feed/feed-api-types.ts';
 
 export interface GuardiansResponseType {
   status: string;
@@ -30,4 +30,4 @@ export interface GuardiansResponse {
   response: GuardiansResponseType;
 }
 
-export interface GuardiansRequest extends Pagination {}
+export interface GuardiansRequest extends GetFeedRequest {}

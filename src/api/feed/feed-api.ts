@@ -22,15 +22,24 @@ import {
 export const feedApi = {
   getFeedFromNewsapi: ({
     page,
+    sources,
+    categories,
+    authors,
   }: NewsapiRequest): ApiResponse<GetFeedFromNewsapiSuccessResponse> => {
-    // TODO: add parameters
     return newsapiHttpClient.get<GetFeedFromNewsapiSuccessResponse>(
       '/v2/top-headlines',
       {
         params: {
-          country: import.meta.env.VITE_NEWSAPI_COUNTRY,
-          category: 'business',
           page: page || 1,
+          ...(authors && authors.length > 0 && { q: authors?.join(' OR ') }),
+          ...(sources && sources.length > 0
+            ? { sources: sources.join(',') }
+            : categories && categories.length > 0
+              ? { category: categories[0] }
+              : {}),
+          ...(!authors?.length &&
+            !sources &&
+            !categories && { country: import.meta.env.VITE_NEWSAPI_COUNTRY }),
         },
       },
     );
@@ -38,13 +47,19 @@ export const feedApi = {
 
   getFeedFromNytimes: ({
     page,
+    sources,
+    categories,
+    authors,
   }: NytimesRequest): ApiResponse<GetFeedFromNytimesSuccessResponse> => {
-    // TODO: add parameters
     return nytimesHttpClient.get<GetFeedFromNytimesSuccessResponse>(
       '/svc/search/v2/articlesearch.json',
       {
         params: {
           page: page - 1 || 0,
+          q:
+            `(${sources?.join(', ') || ''})` +
+            ` OR (${categories?.join(', ') || ''})` +
+            ` OR (${authors?.join(' OR ') || ''})`,
         },
       },
     );
@@ -52,24 +67,35 @@ export const feedApi = {
 
   getFeedFromGuardian: ({
     page,
+    sources,
+    categories,
+    authors,
   }: GuardiansRequest): ApiResponse<GetFeedFromGuardiansSuccessResponse> => {
-    // TODO: add parameters
     return guardianHttpClient.get<GetFeedFromGuardiansSuccessResponse>(
       '/search',
       {
         params: {
           page: page || 1,
+          q:
+            `(${sources?.join(' OR ')})` +
+            ` OR (${categories?.join(' OR ')})` +
+            ` OR (${authors?.join(' OR ')})`,
         },
       },
     );
   },
 
-  getFeed: async ({ page }: GetFeedRequest): Promise<Article[]> => {
+  getFeed: async ({
+    page,
+    sources,
+    categories,
+    authors,
+  }: GetFeedRequest): Promise<Article[]> => {
     const [newsapiResponse, nytimesResponse, guardiansResponse] =
       await Promise.all([
-        feedApi.getFeedFromNewsapi({ page }),
-        feedApi.getFeedFromNytimes({ page }),
-        feedApi.getFeedFromGuardian({ page }),
+        feedApi.getFeedFromNewsapi({ page, sources, categories, authors }),
+        feedApi.getFeedFromNytimes({ page, sources, categories, authors }),
+        feedApi.getFeedFromGuardian({ page, sources, categories, authors }),
       ]);
 
     const newsApiMappedArticles: Article[] = newsapiMappers.articleMapper(

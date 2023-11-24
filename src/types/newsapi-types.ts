@@ -1,4 +1,4 @@
-import { Pagination } from './general-types.ts';
+import { GetFeedRequest } from '../api/feed/feed-api-types.ts';
 
 export interface NewsapiSource {
   id?: string;
@@ -14,18 +14,21 @@ export interface NewsapiArticle {
   urlToImage?: string;
   publishedAt: string;
   content?: string;
-  category?: NewsapiCategory;
+  category?: NewsapiCategoryType;
 }
 
-export const enum NewsapiCategory {
-  BUSINESS = 'business',
-  ENTERTAINMENT = 'entertainment',
-  GENERAL = 'general',
-  HEALTH = 'health',
-  SCIENCE = 'science',
-  SPORTS = 'sports',
-  TECHNOLOGY = 'technology',
-}
+export type NewsapiCategoryType =
+  (typeof NewsapiCategory)[keyof typeof NewsapiCategory];
+
+export const NewsapiCategory = {
+  BUSINESS: 'business',
+  ENTERTAINMENT: 'entertainment',
+  GENERAL: 'general',
+  HEALTH: 'health',
+  SCIENCE: 'science',
+  SPORTS: 'sports',
+  TECHNOLOGY: 'technology',
+};
 
 export interface NewsapiResponse {
   status: string;
@@ -33,4 +36,4 @@ export interface NewsapiResponse {
   articles: NewsapiArticle[];
 }
 
-export interface NewsapiRequest extends Pagination {}
+export interface NewsapiRequest extends GetFeedRequest {}

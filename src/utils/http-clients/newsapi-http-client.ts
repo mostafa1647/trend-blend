@@ -1,5 +1,8 @@
 import axios from 'axios';
 
+/**
+ * @Documentation https://newsapi.org/docs/get-started
+ */
 export const newsapiHttpClient = axios.create({
   baseURL: import.meta.env.VITE_NEWSAPI_BASE_URL,
   params: {
