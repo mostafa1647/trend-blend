@@ -179,14 +179,18 @@ export const Explore = () => {
       ) : getExplore.isError ? (
         <PageError />
       ) : getExplore.data ? (
-        <>
-          <h1 className="w-auto p-3 pt-0 text-large font-bold">
-            Your Search Result
-          </h1>
-          <ArticleList articles={getExplore.data} />
-        </>
+        getExplore.data.length > 0 ? (
+          <>
+            <h1 className="w-auto p-3 pt-0 text-large font-bold">
+              Your Search Result
+            </h1>
+            <ArticleList articles={getExplore.data} />
+          </>
+        ) : (
+          <ExploreEmptyState message="Sorry! We couldn't find any matched result." />
+        )
       ) : (
-        <ExploreEmptyState />
+        <ExploreEmptyState message="Please fill the form to search for your desired articles." />
       )}
     </>
   );

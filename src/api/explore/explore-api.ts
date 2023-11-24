@@ -131,6 +131,7 @@ export const exploreApi = {
       newsapiArticles: newsApiMappedArticles,
       nytimesArticles: nytimesMappedArticles,
       guardianArticles: guardiansMappedArticled,
+      sort: 'asc',
     });
   },
 };
