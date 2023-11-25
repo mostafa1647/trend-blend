@@ -15,6 +15,7 @@ TrendBlend is a news aggregator application built with React + Vite + TypeScript
 - [Data Sources](#data-sources)
 - [Acknowledgements](#acknowledgements)
 - [What's Next?](#what-next)
+- [About Me](#about-me)
 
 ## Getting Started
 
@@ -139,6 +140,9 @@ There are a lot of improvements possible for this project. Some of them are:
 - [ ] Implement a better infrastructure for working with react-hook-form and using better approaches for integrating react-hook-form and NextUI.
 - [ ] Implement pagination mechanism for Explore page.
 - [ ] Add other Data Sources.
+
+## About Me
+I am [Mostafa Mojtahedi](https://github.com/mostafa1647) you can contact me via my [Linkedin](https://www.linkedin.com/in/mostafa-mojtahedi/) account or [email](mailto://mojtahedimostafa.m@gmail.com)
 
 ---
 
