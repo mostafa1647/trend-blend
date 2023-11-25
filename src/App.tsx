@@ -16,6 +16,10 @@ const queryClient = new QueryClient({
   },
 });
 
+console.log(
+  '🚀 Welcome to my news aggregator application, I hope you enjoy it.😁',
+);
+
 function App() {
   return (
     <NextUIProvider>
