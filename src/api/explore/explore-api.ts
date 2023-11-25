@@ -24,13 +24,15 @@ export const exploreApi = {
     source,
     date,
   }: GetExploreRequest): ApiResponse<GetExploreFromNewsapiSuccessResponse> => {
-    const q = [searchValue || '', category || ''].filter(Boolean).join(' AND ');
+    const query = [searchValue || '', category || '']
+      .filter(Boolean)
+      .join(' AND ');
 
     return newsapiHttpClient.get<GetExploreFromNewsapiSuccessResponse>(
       '/v2/everything',
       {
         params: {
-          ...(q && { q }),
+          ...(query && { q: query }),
           ...(source && { sources: source }),
           ...(date && { from: date, to: date }),
           pageSize: 10,
@@ -46,8 +48,10 @@ export const exploreApi = {
     source,
     date,
   }: GetExploreRequest): ApiResponse<GetExploreFromNytimesSuccessResponse> => {
-    const q = [searchValue || '', category || ''].filter(Boolean).join(' AND ');
-    const fq = [
+    const query = [searchValue || '', category || '']
+      .filter(Boolean)
+      .join(' AND ');
+    const filterQuery = [
       date ? `pub_date:${date}` : '',
       source ? `source:${source}` : '',
     ]
@@ -58,8 +62,8 @@ export const exploreApi = {
       '/svc/search/v2/articlesearch.json',
       {
         params: {
-          ...(q && { q }),
-          ...(fq && { fq }),
+          ...(query && { q: query }),
+          ...(filterQuery && { fq: filterQuery }),
         },
       },
     );
@@ -71,7 +75,7 @@ export const exploreApi = {
     source,
     date,
   }: GetExploreRequest): ApiResponse<GetExploreFromGuardiansSuccessResponse> => {
-    const q = [searchValue || '', source || '', category || '']
+    const query = [searchValue || '', source || '', category || '']
       .filter(Boolean)
       .join(' AND ');
 
@@ -79,7 +83,7 @@ export const exploreApi = {
       '/search',
       {
         params: {
-          ...(q && { q }),
+          ...(query && { q: query }),
           ...(date && { 'from-date': date }),
         },
       },

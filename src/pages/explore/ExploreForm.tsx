@@ -1,6 +1,16 @@
-import { Button, Input, Select, SelectItem, Skeleton } from '@nextui-org/react';
+import { useState } from 'react';
+
+import {
+  Button,
+  Input,
+  Select,
+  SelectItem,
+  Skeleton,
+  Tooltip,
+} from '@nextui-org/react';
 import { UseMutationResult } from '@tanstack/react-query';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
+import { useSearchParams } from 'react-router-dom';
 import Datepicker from 'react-tailwindcss-datepicker';
 
 import {
@@ -28,13 +38,17 @@ interface ExploreFormProps {
 }
 
 export const ExploreForm = ({ getExplore }: ExploreFormProps) => {
+  const [params, setParams] = useSearchParams();
+  const [isSearchButtonTooltipVisible, setIsSearchButtonTooltipVisible] =
+    useState(!!params.get('searchValue'));
+
   const form = useForm<ExploreFormSchema>({
     mode: 'onSubmit',
     defaultValues: {
-      searchValue: '',
-      source: new Set(),
-      category: new Set(),
-      date: '',
+      searchValue: params.get('searchValue') || '',
+      source: new Set(params.getAll('source')) || new Set(),
+      category: new Set(params.getAll('category')) || new Set(),
+      date: params.get('date') || '',
     },
   });
 
@@ -59,6 +73,17 @@ export const ExploreForm = ({ getExplore }: ExploreFormProps) => {
           : undefined,
       date: values.date,
     });
+
+    const params = new URLSearchParams({
+      searchValue: values.searchValue,
+      ...(values.category &&
+        values.category?.size > 0 && { category: [...values.category][0] }),
+      ...(values.source &&
+        values.source?.size > 0 && { source: [...values.source][0] }),
+      ...(values.date && { date: values.date }),
+    });
+
+    setParams(params);
   };
 
   return (
@@ -88,15 +113,25 @@ export const ExploreForm = ({ getExplore }: ExploreFormProps) => {
           )}
         />
 
-        <Button
-          type="submit"
+        <Tooltip
+          isOpen={isSearchButtonTooltipVisible}
+          content="Click here to search!"
           color="primary"
-          aria-label="Search"
-          className="border fill-white px-4"
-          isLoading={getExplore.isPending}
+          placement="bottom"
         >
-          <SearchIcon />
-        </Button>
+          <Button
+            type="submit"
+            color="primary"
+            aria-label="Search"
+            className="border fill-white px-4"
+            isLoading={getExplore.isPending}
+            onClick={() => {
+              setIsSearchButtonTooltipVisible(false);
+            }}
+          >
+            <SearchIcon />
+          </Button>
+        </Tooltip>
       </div>
 
       <div className="flex w-full flex-1 flex-col  gap-4 sm:flex-row sm:items-end sm:justify-between">

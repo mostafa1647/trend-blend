@@ -1,8 +1,8 @@
 import { describe, expect, test } from 'vitest';
 
-import { Article } from '../../types/article-types.ts';
-import { NytimesDocument } from '../../types/nytimes-types.ts';
-import { nytimesMappers } from '../mappers/nytimes-mappers.ts';
+import { Article } from '../../../types/article-types.ts';
+import { NytimesDocument } from '../../../types/nytimes-types.ts';
+import { nytimesMappers } from '../nytimes-mappers.ts';
 
 const mockNytimesArticles: NytimesDocument[] = [
   {

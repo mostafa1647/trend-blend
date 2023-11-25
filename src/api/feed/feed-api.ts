@@ -24,20 +24,33 @@ export const feedApi = {
     categories,
     authors,
   }: GetFeedRequest): ApiResponse<GetFeedFromNewsapiSuccessResponse> => {
+    const defaultParams = {
+      country: import.meta.env.VITE_NEWSAPI_COUNTRY,
+    } as const;
+
+    const params: {
+      q?: string;
+      sources?: string;
+      category?: string;
+      country?: string;
+    } = {};
+
+    if (authors?.length) {
+      params['q'] = authors.join(' OR ');
+    }
+
+    if (sources?.length) {
+      params['sources'] = sources.join(',');
+    } else if (categories?.length) {
+      params['category'] = categories[0];
+    }
+
     return newsapiHttpClient.get<GetFeedFromNewsapiSuccessResponse>(
       '/v2/top-headlines',
       {
         params: {
           page: page || 1,
-          ...(authors && authors.length > 0 && { q: authors?.join(' OR ') }),
-          ...(sources && sources.length > 0
-            ? { sources: sources.join(',') }
-            : categories && categories.length > 0
-              ? { category: categories[0] }
-              : {}),
-          ...(!authors?.length &&
-            !sources &&
-            !categories && { country: import.meta.env.VITE_NEWSAPI_COUNTRY }),
+          ...(Object.keys(params).length > 0 ? params : defaultParams),
         },
       },
     );
@@ -49,21 +62,23 @@ export const feedApi = {
     categories,
     authors,
   }: GetFeedRequest): ApiResponse<GetFeedFromNytimesSuccessResponse> => {
-    const q = [
+    const query = [
       categories && categories?.length > 0 ? categories?.join(' OR ') : '',
       authors && authors?.length > 0 ? authors?.join(' OR ') : '',
     ]
       .filter(Boolean)
       .join(' OR ');
-    const fq = sources?.length ? `source:(${sources?.join(', ')})` : '';
+    const filterQuery = sources?.length
+      ? `source:(${sources?.join(', ')})`
+      : '';
 
     return nytimesHttpClient.get<GetFeedFromNytimesSuccessResponse>(
       '/svc/search/v2/articlesearch.json',
       {
         params: {
           page: page - 1 || 0,
-          ...(q && { q }),
-          ...(fq && { fq }),
+          ...(query && { q: query }),
+          ...(filterQuery && { fq: filterQuery }),
         },
       },
     );
@@ -75,7 +90,7 @@ export const feedApi = {
     categories,
     authors,
   }: GetFeedRequest): ApiResponse<GetFeedFromGuardiansSuccessResponse> => {
-    const q = [
+    const query = [
       sources && sources?.length > 0 ? sources?.join(' OR ') : '',
       categories && categories?.length > 0 ? categories?.join(' OR ') : '',
       authors && authors?.length > 0 ? authors?.join(' OR ') : '',
@@ -88,7 +103,7 @@ export const feedApi = {
       {
         params: {
           page: page || 1,
-          ...(q && { q }),
+          ...(query && { q: query }),
         },
       },
     );

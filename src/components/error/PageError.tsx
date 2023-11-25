@@ -1,7 +1,7 @@
-// eslint-disable-next-line import/no-unresolved
 import { Button } from '@nextui-org/react';
 import { useNavigate } from 'react-router-dom';
 
+// eslint-disable-next-line import/no-unresolved
 import ErrorImage from '../../assets/images/error-image.svg?react';
 import { paths } from '../../router/paths.ts';
 import { DEFAULT_ERROR_MESSAGE } from '../../utils/constants.ts';
