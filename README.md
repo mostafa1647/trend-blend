@@ -8,7 +8,7 @@ TrendBlend is a news aggregator application built with React + Vite + TypeScript
 - [Prerequisites](#prerequisites)
 - [Installation](#installation)
 - [Running the App](#running-the-app)
-  - [Production](#production-)
+  - [Production](#production)
   - [Development Mode](#development-mode)
 - [Testing](#testing)
 - [Built With](#built-with)
