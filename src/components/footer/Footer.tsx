@@ -3,7 +3,7 @@ import { Link } from '@nextui-org/react';
 export const Footer = () => {
   return (
     <div className="container m-auto flex items-center justify-center p-4">
-      <p className="font-bold text-foreground">
+      <p className="text-center font-bold text-foreground">
         © {new Date().getFullYear()}{' '}
         <Link
           href="https://github.com/mostafa1647"
