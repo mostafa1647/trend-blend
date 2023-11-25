@@ -23,7 +23,6 @@ export const router = createBrowserRouter([
     ],
   },
   {
-    // TODO: complete 404 page
     path: '*',
     element: <PageError />,
   },

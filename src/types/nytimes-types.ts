@@ -24,8 +24,8 @@ export interface NytimesDocument {
 export interface NytimesMultimedia {
   rank: number;
   subtype: string;
-  caption?: string;
-  credit?: string;
+  caption?: string | null;
+  credit?: string | null;
   type: string;
   url: string;
   height: number;
@@ -50,11 +50,11 @@ export interface NytimesLegacy {
 export interface NytimesHeadline {
   main: string;
   kicker?: string;
-  content_kicker?: string;
-  print_headline?: string;
-  name?: string;
-  seo?: string;
-  sub?: string;
+  content_kicker?: string | null;
+  print_headline?: string | null;
+  name?: string | null;
+  seo?: string | null;
+  sub?: string | null;
 }
 
 export interface NytimesKeyword {
@@ -67,15 +67,15 @@ export interface NytimesKeyword {
 export interface NytimesByline {
   original?: string;
   person: NytimesPerson[];
-  organization?: string;
+  organization?: string | null;
 }
 
 export interface NytimesPerson {
   firstname?: string;
-  middlename?: string;
+  middlename?: string | null;
   lastname?: string;
-  qualifier?: string;
-  title?: string;
+  qualifier?: string | null;
+  title?: string | null;
   role: string;
   organization: string;
   rank: number;
