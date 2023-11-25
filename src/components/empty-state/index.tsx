@@ -1,3 +1,3 @@
-import { ExploreEmptyState } from './ExploreEmptyState.tsx';
+import { EmptyState } from './EmptyState.tsx';
 
-export { ExploreEmptyState };
+export { EmptyState };

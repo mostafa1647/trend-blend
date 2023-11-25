@@ -14,7 +14,7 @@ import { NavLink } from 'react-router-dom';
 import { paths } from '../../router/paths.ts';
 
 import { appbarData } from './appbar-data.ts';
-import { PersonalizationModal } from './PersonalizationModal.tsx';
+import { UserPreferencesModal } from './UserPreferencesModal.tsx';
 
 const activeMenuClasses = 'font-medium text-primary';
 
@@ -53,7 +53,7 @@ export const Appbar = () => {
       </NavbarContent>
 
       <NavbarContent justify="end">
-        <PersonalizationModal />
+        <UserPreferencesModal />
       </NavbarContent>
 
       <NavbarMenu>
