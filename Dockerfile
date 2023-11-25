@@ -20,9 +20,10 @@ RUN npm run build
 FROM nginxinc/nginx-unprivileged
 
 COPY --from=builder /app/dist /usr/share/nginx/html
+COPY .docker/default.conf /etc/nginx/conf.d/default.conf
 
 USER root
 RUN chgrp -R 0 /usr/share/nginx && chmod -R g=u /usr/share/nginx
 USER nginx
 
-PORT 8080
+EXPOSE 8080
