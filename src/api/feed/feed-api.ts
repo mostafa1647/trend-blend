@@ -49,15 +49,21 @@ export const feedApi = {
     categories,
     authors,
   }: GetFeedRequest): ApiResponse<GetFeedFromNytimesSuccessResponse> => {
+    const q = [
+      categories && categories?.length > 0 ? categories?.join(' OR ') : '',
+      authors && authors?.length > 0 ? authors?.join(' OR ') : '',
+    ]
+      .filter(Boolean)
+      .join(' OR ');
+    const fq = sources?.length ? `source:(${sources?.join(', ')})` : '';
+
     return nytimesHttpClient.get<GetFeedFromNytimesSuccessResponse>(
       '/svc/search/v2/articlesearch.json',
       {
         params: {
           page: page - 1 || 0,
-          q:
-            `(${sources?.join(', ') || ''})` +
-            ` OR (${categories?.join(', ') || ''})` +
-            ` OR (${authors?.join(' OR ') || ''})`,
+          ...(q && { q }),
+          ...(fq && { fq }),
         },
       },
     );
@@ -69,15 +75,20 @@ export const feedApi = {
     categories,
     authors,
   }: GetFeedRequest): ApiResponse<GetFeedFromGuardiansSuccessResponse> => {
+    const q = [
+      sources && sources?.length > 0 ? sources?.join(' OR ') : '',
+      categories && categories?.length > 0 ? categories?.join(' OR ') : '',
+      authors && authors?.length > 0 ? authors?.join(' OR ') : '',
+    ]
+      .filter(Boolean)
+      .join(' OR ');
+
     return guardianHttpClient.get<GetFeedFromGuardiansSuccessResponse>(
       '/search',
       {
         params: {
           page: page || 1,
-          q:
-            `(${sources?.join(' OR ')})` +
-            ` OR (${categories?.join(' OR ')})` +
-            ` OR (${authors?.join(' OR ')})`,
+          ...(q && { q }),
         },
       },
     );
