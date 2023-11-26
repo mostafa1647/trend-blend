@@ -1,3 +1,3 @@
 import { Feed } from './Feed.tsx';
 
-export { Feed };
+export default Feed;

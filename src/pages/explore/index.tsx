@@ -1,3 +1,3 @@
 import { Explore } from './Explore.tsx';
 
-export { Explore };
+export default Explore;

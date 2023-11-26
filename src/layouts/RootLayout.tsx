@@ -3,7 +3,7 @@ import { Outlet } from 'react-router-dom';
 import { Appbar } from '../components/appbar';
 import { Footer } from '../components/footer';
 
-export const RootLayout = () => {
+const RootLayout = () => {
   return (
     <>
       <Appbar />
@@ -14,3 +14,5 @@ export const RootLayout = () => {
     </>
   );
 };
+
+export default RootLayout;
